@@ -4,7 +4,6 @@ using System.Text;
 
 namespace Com.DanLiris.Service.Logging.Lib.Utilities
 {
-
     public static class NumberToTextIDN
     {
         static string[] satuan = { "Nol", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan" };
@@ -102,7 +101,6 @@ namespace Com.DanLiris.Service.Logging.Lib.Utilities
 
             return strHasil;
         }
-
         public static string terbilangKoma(double frac)
         {
             var a = frac.ToString().Substring(frac.ToString().IndexOf(".") + 1);
@@ -123,7 +121,6 @@ namespace Com.DanLiris.Service.Logging.Lib.Utilities
             }
             return strHasil;
         }
-
         public static string terbilangv2(double d)
         {
             var strHasil = "";

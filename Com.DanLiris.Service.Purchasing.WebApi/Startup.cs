@@ -13,6 +13,8 @@ using Com.DanLiris.Service.Logging.Lib.Utilities;
 using Com.DanLiris.Service.Logging.Lib.Serializers;
 using Com.DanLiris.Service.Logging.WebApi.Tools.AppInsight;
 using Com.DanLiris.Service.Logging.WebApi.Helpers;
+using Com.DanLiris.Service.Logging.Lib.Interfaces;
+using Com.DanLiris.Service.Logging.WebApi.SchedulerJobs;
 
 namespace Com.DanLiris.Service.Logging.WebApi
 {
@@ -61,8 +63,8 @@ namespace Com.DanLiris.Service.Logging.WebApi
             services
                 .AddScoped<IdentityService>()
                 .AddScoped<ValidateService>()
-                .AddScoped<IHttpClientService, HttpClientService>();
-                //.AddScoped<IValidateService, ValidateService>();
+                .AddScoped<IHttpClientService, HttpClientService>()
+                .AddScoped<IValidateService, ValidateService>();
         }
 
         private void RegisterSerializationProvider()
@@ -77,17 +79,6 @@ namespace Com.DanLiris.Service.Logging.WebApi
             string connectionString = Configuration.GetConnectionString(Constant.DEFAULT_CONNECTION) ?? Configuration[Constant.DEFAULT_CONNECTION];
             string env = Configuration.GetValue<string>(Constant.ASPNETCORE_ENVIRONMENT);
 
-            //APIEndpoint.ConnectionString = Configuration.GetConnectionString("DefaultConnection") ?? Configuration["DefaultConnection"];
-            //var keyVaultEnpoint = new Uri(Configuration["VaultKey"]);
-            //var secretClient = new SecretClient(keyVaultEnpoint, new DefaultAzureCredential());
-
-            //KeyVaultSecret kvsDB = secretClient.GetSecret(Configuration["VaultKeyDbSecretPurchasing"]);
-            //KeyVaultSecret kvsServer = secretClient.GetSecret(Configuration["VaultKeyServerSecret"]);
-
-            /* Register */
-            //services.AddDbContext<PurchasingDbContext>(options => options.UseSqlServer(string.Concat(kvsDB.Value, kvsServer.Value), sqlServerOptions => sqlServerOptions.CommandTimeout(1000 * 60 * 20)));
-            //services.AddDbContext<PurchasingDbContext>(options => options.UseSqlServer(connectionString));
-
             services.AddDbContext<LoggingDbContext>(options => options.UseSqlServer(connectionString, sqlServerOptions => sqlServerOptions.CommandTimeout(1000 * 60 * 20)));
             //RegisterEndpoints();
             RegisterFacades(services);
@@ -99,7 +90,6 @@ namespace Com.DanLiris.Service.Logging.WebApi
             services.AddMemoryCache();
 
             RegisterSerializationProvider();
-            //RegisterClassMap();
 
             services
                  .AddApiVersioning(options =>
@@ -149,7 +139,6 @@ namespace Com.DanLiris.Service.Logging.WebApi
                .AddApiExplorer()
                .AddAuthorization();
 
-
             services
                 .AddControllers()
                 .AddNewtonsoftJson(opt =>
@@ -172,7 +161,7 @@ namespace Com.DanLiris.Service.Logging.WebApi
             services.AddSwaggerGen(options =>
             {
                 options.CustomSchemaIds(type => type.ToString());
-                //options.OperationFilter<ResponseHeaderFilter>();
+                options.OperationFilter<ResponseHeaderFilter>();
             });
         }
 

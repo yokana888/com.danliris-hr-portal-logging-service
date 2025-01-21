@@ -1,5 +1,4 @@
-﻿using Com.DanLiris.Service.Purchasing.Lib.Models.GarmentDeliveryOrderModel;
-using Com.Moonlay.Models;
+﻿using Com.Moonlay.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

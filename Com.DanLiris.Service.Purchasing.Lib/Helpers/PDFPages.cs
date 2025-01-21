@@ -8,7 +8,6 @@ namespace Com.DanLiris.Service.Logging.Lib.Helpers
 {
     public class PDFPages : PdfPageEventHelper
     {
-
         public override void OnEndPage(PdfWriter writer, Document doc)
         {
 
@@ -38,6 +37,5 @@ namespace Com.DanLiris.Service.Logging.Lib.Helpers
             //this is for the position of the footer
             footerTbl.WriteSelectedRows(0, -1, 0, doc.BottomMargin - 10, writer.DirectContent);
         }
-
     }
 }

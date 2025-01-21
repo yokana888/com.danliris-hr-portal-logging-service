@@ -1,5 +1,4 @@
-﻿using Com.DanLiris.Service.Purchasing.Lib.Serializers;
-using MongoDB.Bson.Serialization;
+﻿using MongoDB.Bson.Serialization;
 using System;
 
 namespace Com.DanLiris.Service.Logging.Lib.Serializers
