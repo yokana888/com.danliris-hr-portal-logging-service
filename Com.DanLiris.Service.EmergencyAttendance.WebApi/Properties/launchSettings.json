@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Com.DanLiris.Service.Purchasing.WebApi": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:60462;http://localhost:60463"
+    }
+  }
+}

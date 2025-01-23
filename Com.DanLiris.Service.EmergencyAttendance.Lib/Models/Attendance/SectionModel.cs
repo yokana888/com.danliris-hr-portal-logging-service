@@ -1,0 +1,14 @@
+﻿using Com.DanLiris.Service.EmergencyAttendance.Lib.Utilities;
+using Com.Moonlay.Models;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+
+namespace EWorkplaceAbsensiService.Lib.Models
+{
+    public class SectionModel : StandardEntity<long>
+    {
+        [MaxLength(64)]
+        public string Name { get; set; }
+        public int UnitId { get; set; }
+    }
+}
