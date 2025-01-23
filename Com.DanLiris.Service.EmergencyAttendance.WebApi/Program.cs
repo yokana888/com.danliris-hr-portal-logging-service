@@ -1,5 +1,6 @@
 using Com.Moonlay.NetCore.Lib.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 
 namespace Com.DanLiris.Service.EmergencyAttendance.WebApi
@@ -15,7 +16,10 @@ namespace Com.DanLiris.Service.EmergencyAttendance.WebApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             // builder.Services.AddSwaggerGen();
-
+            builder.Services.Configure<JsonOptions>(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;  // Nonaktifkan CamelCase
+            });
             builder.Services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo API", Version = "v1" });
@@ -35,8 +39,8 @@ namespace Com.DanLiris.Service.EmergencyAttendance.WebApi
                         {
                             Reference = new OpenApiReference
                             {
-                                      Type=ReferenceType.SecurityScheme,
-                                      Id="Bearer"
+                                Type=ReferenceType.SecurityScheme,
+                                Id="Bearer"
                             }
                         },
                         new string[]{}

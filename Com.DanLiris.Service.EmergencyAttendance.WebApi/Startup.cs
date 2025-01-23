@@ -15,6 +15,7 @@ using Com.DanLiris.Service.EmergencyAttendance.WebApi.Helpers;
 using Com.DanLiris.Service.EmergencyAttendance.WebApi.Tools.AppInsight;
 using Com.DanLiris.Service.EmergencyAttendance.Lib.Serializers;
 using Com.DanLiris.Service.EmergencyAttendance.Lib.Facades;
+using Microsoft.Extensions.Options;
 
 namespace Com.DanLiris.Service.EmergencyAttendance.WebApi
 {
@@ -83,7 +84,7 @@ namespace Com.DanLiris.Service.EmergencyAttendance.WebApi
             string env = Configuration.GetValue<string>(Constant.ASPNETCORE_ENVIRONMENT);
 
             /* dbContext Emergency */
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString, sqlServerOptions => sqlServerOptions.CommandTimeout(1000 * 60 * 20)));
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString, sqlServerOptions => sqlServerOptions.CommandTimeout(1000 * 60 * 20)));
             /* dbContext Attendance */
             services.AddDbContext<AttendanceDbContext>(options => SqlServerDbContextOptionsExtensions.UseSqlServer(options, connectionStringAttendance));
 

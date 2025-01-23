@@ -5,13 +5,13 @@ using System.Text;
 
 namespace EWorkplaceAbsensiService.Lib.Models
 {
-    public class UnitModel : StandardEntity<long>
+    public class UnitModel : StandardEntity
     {
         [MaxLength(512)]
-        public string Name { get; set; }
+        public string? Name { get; set; }
         [MaxLength(64)]
-        public string Code { get; set; }
+        public string? Code { get; set; }
         [MaxLength(16)]
-        public string EmployeeIdentityReferenceCode { get; set; }
+        public string? EmployeeIdentityReferenceCode { get; set; }
     }
 }

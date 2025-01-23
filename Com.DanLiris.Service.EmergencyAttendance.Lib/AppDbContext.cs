@@ -9,9 +9,9 @@ using Com.DanLiris.Service.EmergencyAttendance.Lib.Models;
 
 namespace Com.DanLiris.Service.EmergencyAttendance.Lib
 {
-    public class ApplicationDbContext : DbContext
+    public class AppDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
             if (Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
                 Database.SetCommandTimeout(1000 * 60 * 20);

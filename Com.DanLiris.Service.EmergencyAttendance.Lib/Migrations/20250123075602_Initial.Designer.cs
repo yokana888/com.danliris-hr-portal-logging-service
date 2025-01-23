@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250122060212_Initial")]
+    [DbContext(typeof(AppDbContext))]
+    [Migration("20250123075602_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -27,11 +27,11 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
 
             modelBuilder.Entity("Com.DanLiris.Service.EmergencyAttendance.Lib.Models.CheckInModel", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -112,11 +112,11 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
 
             modelBuilder.Entity("Com.DanLiris.Service.EmergencyAttendance.Lib.Models.CheckOutModel", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -197,11 +197,11 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
 
             modelBuilder.Entity("EWorkplaceAbsensiService.Lib.Models.AttendanceModel", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -213,7 +213,6 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CheckInImageUri")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset>("CheckOut")
@@ -223,16 +222,13 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CheckOutImageUri")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CheckOutLatitude")
-                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("CheckOutLongitude")
-                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
@@ -294,22 +290,18 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Latitude")
-                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Location")
-                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Longitude")
-                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("State")
-                        .IsRequired()
                         .HasMaxLength(8)
                         .HasColumnType("nvarchar(8)");
 
@@ -320,19 +312,17 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
 
             modelBuilder.Entity("EWorkplaceAbsensiService.Lib.Models.EmployeeModel", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AccessRole")
-                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("AccountNo")
-                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
@@ -343,12 +333,10 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("Area")
-                        .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
@@ -365,7 +353,6 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("BloodType")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
@@ -376,7 +363,6 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("BpjsKetenagakerjaan")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("BpjsKetenagakerjaanId")
@@ -392,17 +378,14 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CitizenshipIdentity")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("CompanyCode")
-                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
@@ -429,7 +412,6 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("DeleteReason")
-                        .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
@@ -450,18 +432,15 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("DigitalGenerateCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DigitalId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset>("DoB")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Education")
-                        .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
@@ -475,25 +454,20 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("EmployeeIdentity")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("EmployeeLocation")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmployeeStatusRemark")
-                        .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("EmploymentClass")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmploymentStatus")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
@@ -507,17 +481,14 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("FingerprintId")
-                        .IsRequired()
                         .HasMaxLength(16)
                         .HasColumnType("nvarchar(16)");
 
                     b.Property<string>("Firstname")
-                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .HasMaxLength(16)
                         .HasColumnType("nvarchar(16)");
 
@@ -555,7 +526,6 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("JPKNo")
-                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
@@ -579,16 +549,13 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Lastname")
-                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("LeadBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LeadOf")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("LeaderAllowance")
@@ -598,7 +565,6 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("MaritalStatus")
-                        .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
@@ -606,35 +572,28 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("NPWPNo")
-                        .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("NotificationToken")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("PlaceOfBirth")
-                        .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("ProfileImageBase64")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfileImageUri")
-                        .IsRequired()
                         .HasMaxLength(1024)
                         .HasColumnType("nvarchar(1024)");
 
                     b.Property<string>("Religion")
-                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
@@ -645,7 +604,6 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("School")
-                        .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
@@ -653,16 +611,13 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("SocialMedia")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Specialization")
-                        .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("StatusEmployee")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -673,7 +628,6 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Trustee")
-                        .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
@@ -688,13 +642,82 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                     b.ToTable("EmployeeModel");
                 });
 
+            modelBuilder.Entity("EWorkplaceAbsensiService.Lib.Models.EmployeeUnitAccessItemModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("CreatedAgent")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime>("CreatedUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedAgent")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("DeletedBy")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime>("DeletedUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastModifiedAgent")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("LastModifiedBy")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime>("LastModifiedUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UnitId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UnitName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("EmployeeUnitAccessItemModel");
+                });
+
             modelBuilder.Entity("EWorkplaceAbsensiService.Lib.Models.GroupModel", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -742,7 +765,6 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
@@ -759,11 +781,11 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
 
             modelBuilder.Entity("EWorkplaceAbsensiService.Lib.Models.SectionModel", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -811,7 +833,6 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
@@ -825,17 +846,16 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
 
             modelBuilder.Entity("EWorkplaceAbsensiService.Lib.Models.UnitModel", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
                     b.Property<string>("Code")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
@@ -866,7 +886,6 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmployeeIdentityReferenceCode")
-                        .IsRequired()
                         .HasMaxLength(16)
                         .HasColumnType("nvarchar(16)");
 
@@ -887,13 +906,28 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
                     b.HasKey("Id");
 
                     b.ToTable("UnitModel");
+                });
+
+            modelBuilder.Entity("EWorkplaceAbsensiService.Lib.Models.EmployeeUnitAccessItemModel", b =>
+                {
+                    b.HasOne("EWorkplaceAbsensiService.Lib.Models.EmployeeModel", "Employee")
+                        .WithMany("EmployeeUnitAccessItems")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("EWorkplaceAbsensiService.Lib.Models.EmployeeModel", b =>
+                {
+                    b.Navigation("EmployeeUnitAccessItems");
                 });
 #pragma warning restore 612, 618
         }

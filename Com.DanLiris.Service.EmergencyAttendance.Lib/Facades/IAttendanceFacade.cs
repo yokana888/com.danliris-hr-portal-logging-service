@@ -10,8 +10,10 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Facades
 {
     public interface IAttendanceFacade
     {
+        Task<CheckTimeIndex> Read(string type, int page = 1, int size = 25);
         Task<CheckTimeIndex> Read(string type, int page = 1, int size = 25, string order = "{}", string keyword = null, string filter = "{}");
-        Tuple<List<CheckInViewModel>, int, Dictionary<string, string>> ReadCheckIn(int page = 1, int size = 25, string order = "{}", string keyword = null, string filter = "{}");
-        Tuple<List<CheckOutViewModel>, int, Dictionary<string, string>> ReadCheckOut(int page = 1, int size = 25, string order = "{}", string keyword = null, string filter = "{}");
+        Task<int> CheckIn(CheckInViewModel viewModel);
+        Task<int> CheckOut(CheckOutViewModel viewModel);
+        Task<CheckTimeDto> GetLatestAttend(int employeeId);
     }
 }

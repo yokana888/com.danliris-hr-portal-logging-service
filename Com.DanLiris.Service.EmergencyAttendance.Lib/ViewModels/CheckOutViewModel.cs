@@ -10,7 +10,7 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.ViewModels
 {
     public class CheckOutViewModel : BaseViewModel
     {
-        public int? EmployeeId { get; set; }
+        public int EmployeeId { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
         public string ImageUri { get; set; }

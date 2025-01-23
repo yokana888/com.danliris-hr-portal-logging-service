@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Models
 {
-    public class CheckOutModel : StandardEntity<long>
+    public class CheckOutModel : StandardEntity
     {
         public int EmployeeId { get; set; }
         [MaxLength(128)]

@@ -12,7 +12,7 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Dto
 {
     public class CheckTimeDto : BaseViewModel
     {
-        public int? EmployeeId { get; set; }
+        public long? EmployeeId { get; set; }
         public string EmployeeName { get; set; }
         public string EmployeeIdentity { get; set; }
         public string UnitName { get; set; }
@@ -24,7 +24,7 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Dto
         public string Username { get; set; }
         public DateTimeOffset CheckTime { get; set; }
         public string Type { get; set; }
-        public int? AttendanceId { get; set; }
+        public long? AttendanceId { get; set; }
         public bool IsPosted { get; set; }
     }
 }

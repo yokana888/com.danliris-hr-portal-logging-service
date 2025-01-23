@@ -5,10 +5,10 @@ using System.Text;
 
 namespace EWorkplaceAbsensiService.Lib.Models
 {
-    public class SectionModel : StandardEntity<long>
+    public class SectionModel : StandardEntity
     {
         [MaxLength(64)]
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public int UnitId { get; set; }
     }
 }

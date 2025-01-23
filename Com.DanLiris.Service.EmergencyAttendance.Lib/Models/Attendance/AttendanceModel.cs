@@ -8,21 +8,21 @@ using System.Linq;
 
 namespace EWorkplaceAbsensiService.Lib.Models
 {
-    public class AttendanceModel : StandardEntity<long>
+    public class AttendanceModel : StandardEntity
     {
         public int EmployeeId { get; set; }
         [MaxLength(8)]
-        public string State { get; set; }
+        public string? State { get; set; }
         [MaxLength(128)]
-        public string Location { get; set; }
+        public string? Location { get; set; }
         [MaxLength(128)]
-        public string Longitude { get; set; }
+        public string? Longitude { get; set; }
         [MaxLength(128)]
-        public string Latitude { get; set; }
+        public string? Latitude { get; set; }
         [MaxLength(128)]
-        public string CheckOutLongitude { get; set; }
+        public string? CheckOutLongitude { get; set; }
         [MaxLength(128)]
-        public string CheckOutLatitude { get; set; }
+        public string? CheckOutLatitude { get; set; }
         public int CheckedInShiftId { get; set; }
         public DateTimeOffset CheckIn { get; set; }
         public DateTimeOffset CheckOut { get; set; }
@@ -30,9 +30,9 @@ namespace EWorkplaceAbsensiService.Lib.Models
         public int CheckOutDifference { get; set; }
         public int CheckInDifference { get; set; }
 
-        public string CheckInImageUri { get; set; }
+        public string? CheckInImageUri { get; set; }
         public bool IsFailedRecognizeCheckInImage { get; set; }
-        public string CheckOutImageUri { get; set; }
+        public string? CheckOutImageUri { get; set; }
         public bool IsFailedRecognizeCheckOutImage { get; set; }
     }
 }

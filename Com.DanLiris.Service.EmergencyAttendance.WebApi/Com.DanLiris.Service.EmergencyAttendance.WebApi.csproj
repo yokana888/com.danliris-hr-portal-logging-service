@@ -26,7 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Com.DanLiris.Service.EmergencyAttendance.Lib\Com.DanLiris.Service.EmergencyAttendance.Lib.csproj" />
-    <ProjectReference Include="..\Com.DanLiris.Service.Purchasing.Lib\Com.DanLiris.Service.EmergencyAttendance.Lib.csproj" />
+    <ProjectReference Include="..\Com.DanLiris.Service.EmergencyAttendance.Lib\Com.DanLiris.Service.EmergencyAttendance.Lib.csproj" />
   </ItemGroup>
 
 </Project>

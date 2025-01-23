@@ -15,7 +15,7 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib
 {
     public class AttendanceDbContext : DbContext
     {
-        public AttendanceDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        public AttendanceDbContext(DbContextOptions<AttendanceDbContext> options) : base(options)
         {
             if (Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
                 Database.SetCommandTimeout(1000 * 60 * 20);
@@ -25,6 +25,7 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib
         public DbSet<UnitModel> Units { get; set; }
         public DbSet<SectionModel> Sections { get; set; }
         public DbSet<GroupModel> Groups { get; set; }
+        public DbSet<EmployeeUnitAccessItemModel> EmployeeUnitAccessItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
