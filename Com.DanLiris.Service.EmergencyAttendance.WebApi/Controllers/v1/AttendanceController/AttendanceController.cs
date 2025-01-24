@@ -9,6 +9,7 @@ using Com.DanLiris.Service.EmergencyAttendance.Lib.Facades;
 using Com.DanLiris.Service.EmergencyAttendance.Lib.ViewModels;
 using Humanizer;
 using Com.DanLiris.Service.EmergencyAttendance.Lib.Dto;
+using Com.DanLiris.Service.EmergencyAttendance.Lib.Services.BlobStorage;
 namespace Com.DanLiris.Service.EmergencyAttendance.WebApi.Controllers.v1.AttendanceController
 {
     [Produces("application/json")]
@@ -21,6 +22,7 @@ namespace Com.DanLiris.Service.EmergencyAttendance.WebApi.Controllers.v1.Attenda
         private readonly IMapper mapper;
         private readonly IdentityService identityService;
         private readonly IServiceProvider _serviceProvider;
+        private readonly IBlobStorage _blobStorage;
         private readonly IAttendanceFacade facade;
 
         public AttendanceController(IMapper mapper, IServiceProvider serviceProvider, IAttendanceFacade facade)
@@ -28,6 +30,7 @@ namespace Com.DanLiris.Service.EmergencyAttendance.WebApi.Controllers.v1.Attenda
             this.mapper = mapper;
             this.facade = facade;
             _serviceProvider = serviceProvider;
+            _blobStorage = serviceProvider.GetService<IBlobStorage>();
             identityService = (IdentityService)serviceProvider.GetService(typeof(IdentityService));
         }
 
@@ -111,6 +114,75 @@ namespace Com.DanLiris.Service.EmergencyAttendance.WebApi.Controllers.v1.Attenda
                     .Fail();
                 return StatusCode(General.INTERNAL_ERROR_STATUS_CODE, result);
             }
+        }
+
+        [HttpPost("upload-attendance-image/{employeeIdentity}")]
+        public async Task<IActionResult> UploadAttendancemImage([FromRoute] string employeeIdentity, IFormFile formFile)
+        {
+            try
+            {
+                VerifyUser();
+
+                if (formFile != null && IsImage(formFile))
+                {
+                    if (formFile.Length > 0)
+                    {
+                        var filename = employeeIdentity + formFile.FileName;
+                        var result = await _blobStorage.Upload(formFile.OpenReadStream(), filename);
+
+                        return Created("", new { result });
+                    }
+                }
+
+                return BadRequest("File is not a valid image");
+            }
+            catch (Exception e)
+            {
+                var result = new ResultFormatter(ApiVersion, General.INTERNAL_ERROR_STATUS_CODE, e.Message)
+                    .Fail();
+                return StatusCode(General.INTERNAL_ERROR_STATUS_CODE, result);
+            }
+        }
+
+        [HttpPost("upload-attendance-image/base64/{employeeIdentity}")]
+        public async Task<IActionResult> UploadAttendancemImageBase64([FromRoute] string employeeIdentity, [FromBody] UploadBase64 uploadBase64)
+        {
+            try
+            {
+                VerifyUser();
+
+                if (!string.IsNullOrWhiteSpace(uploadBase64.Base64String) && !string.IsNullOrWhiteSpace(uploadBase64.FileName))
+                {
+
+                    var bytes = Convert.FromBase64String(uploadBase64.Base64String);
+                    var contents = new MemoryStream(bytes);
+
+                    var filename = employeeIdentity + uploadBase64.FileName;
+                    var result = await _blobStorage.Upload(contents, filename);
+
+                    return Created("", new { result });
+                }
+
+                return BadRequest("File is not a valid image");
+            }
+            catch (Exception e)
+            {
+                var result = new ResultFormatter(ApiVersion, General.INTERNAL_ERROR_STATUS_CODE, e.Message)
+                    .Fail();
+                return StatusCode(General.INTERNAL_ERROR_STATUS_CODE, result);
+            }
+        }
+
+        private bool IsImage(IFormFile formFile)
+        {
+            if (formFile.ContentType.Contains("image"))
+            {
+                return true;
+            }
+
+            string[] formats = new string[] { ".jpg", ".png", ".gif", ".jpeg", ".heic" };
+
+            return formats.Any(item => formFile.FileName.EndsWith(item, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

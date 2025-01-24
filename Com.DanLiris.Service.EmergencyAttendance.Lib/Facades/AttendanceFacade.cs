@@ -332,7 +332,6 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Facades
                 throw new ServiceValidationExeption(validationContext, errorResult);
             }
 
-
             return Created;
         }
 
@@ -385,7 +384,6 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Facades
                 var validationContext = new ValidationContext(viewModel, serviceProvider, null);
                 throw new ServiceValidationExeption(validationContext, errorResult);
             }
-
 
             return Created;
         }

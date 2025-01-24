@@ -16,6 +16,7 @@ using Com.DanLiris.Service.EmergencyAttendance.WebApi.Tools.AppInsight;
 using Com.DanLiris.Service.EmergencyAttendance.Lib.Serializers;
 using Com.DanLiris.Service.EmergencyAttendance.Lib.Facades;
 using Microsoft.Extensions.Options;
+using Com.DanLiris.Service.EmergencyAttendance.Lib.Services.BlobStorage;
 
 namespace Com.DanLiris.Service.EmergencyAttendance.WebApi
 {
@@ -55,8 +56,10 @@ namespace Com.DanLiris.Service.EmergencyAttendance.WebApi
         private void RegisterFacades(IServiceCollection services)
         {
             services
-                .AddTransient<ICoreData, CoreData>()
-                .AddTransient<ICoreHttpClientService, CoreHttpClientService>()
+                .AddScoped<IBlobStorage, AzureBlobStorage>()
+                .AddScoped<IAzureStorageConfiguration, AzureStorageConfiguration>()
+                //.AddTransient<ICoreData, CoreData>()
+                //.AddTransient<ICoreHttpClientService, CoreHttpClientService>()
                 .AddTransient<IAttendanceFacade, AttendanceFacade>();
         }
 
