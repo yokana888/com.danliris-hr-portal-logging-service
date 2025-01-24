@@ -79,14 +79,14 @@ namespace Com.DanLiris.Service.EmergencyAttendance.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionString = Configuration.GetConnectionString(Constant.DEFAULT_CONNECTION) ?? Configuration[Constant.DEFAULT_CONNECTION];
-            string connectionStringAttendance = Configuration.GetConnectionString("AttendanceConnection") ?? Configuration["AttendanceConnection"];
+            //string connectionStringAttendance = Configuration.GetConnectionString("AttendanceConnection") ?? Configuration["AttendanceConnection"];
 
             string env = Configuration.GetValue<string>(Constant.ASPNETCORE_ENVIRONMENT);
 
             /* dbContext Emergency */
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString, sqlServerOptions => sqlServerOptions.CommandTimeout(1000 * 60 * 20)));
             /* dbContext Attendance */
-            services.AddDbContext<AttendanceDbContext>(options => SqlServerDbContextOptionsExtensions.UseSqlServer(options, connectionStringAttendance));
+            //services.AddDbContext<AttendanceDbContext>(options => SqlServerDbContextOptionsExtensions.UseSqlServer(options, connectionStringAttendance));
 
             //RegisterEndpoints();
             RegisterFacades(services);

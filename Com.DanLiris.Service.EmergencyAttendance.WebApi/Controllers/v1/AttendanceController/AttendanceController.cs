@@ -38,24 +38,24 @@ namespace Com.DanLiris.Service.EmergencyAttendance.WebApi.Controllers.v1.Attenda
             identityService.TimezoneOffset = Convert.ToInt32(Request.Headers["x-timezone-offset"]);
         }
 
-        [HttpGet("list/{type}")]
-        public async Task<IActionResult> Get([FromRoute] string type, int page = 1, int size = 25)
-        {
-            try
-            {
-                identityService.Username = User.Claims.Single(p => p.Type.Equals("username")).Value;
-                var result = await facade.Read(type, page, size);
+        //[HttpGet("list/{type}")]
+        //public async Task<IActionResult> Get([FromRoute] string type, int page = 1, int size = 25)
+        //{
+        //    try
+        //    {
+        //        identityService.Username = User.Claims.Single(p => p.Type.Equals("username")).Value;
+        //        var result = await facade.Read(type, page, size);
 
-                return Ok(result);
-            }
-            catch (Exception e)
-            {
-                Dictionary<string, object> Result =
-                    new ResultFormatter(ApiVersion, General.INTERNAL_ERROR_STATUS_CODE, e.Message)
-                    .Fail();
-                return StatusCode(General.INTERNAL_ERROR_STATUS_CODE, Result);
-            }
-        }
+        //        return Ok(result);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Dictionary<string, object> Result =
+        //            new ResultFormatter(ApiVersion, General.INTERNAL_ERROR_STATUS_CODE, e.Message)
+        //            .Fail();
+        //        return StatusCode(General.INTERNAL_ERROR_STATUS_CODE, Result);
+        //    }
+        //}
 
         [HttpPost("check-in")]
         public async Task<IActionResult> CheckIn([FromBody] CheckInViewModel viewModel)

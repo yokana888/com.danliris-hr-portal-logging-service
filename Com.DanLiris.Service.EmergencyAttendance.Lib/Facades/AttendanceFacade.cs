@@ -6,7 +6,6 @@ using Com.DanLiris.Service.EmergencyAttendance.Lib.ViewModels;
 using Com.Moonlay.Models;
 using Com.Moonlay.NetCore.Lib;
 using Com.Moonlay.NetCore.Lib.Service;
-using EWorkplaceAbsensiService.Lib.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,7 +30,7 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Facades
     public class AttendanceFacade : IAttendanceFacade
     {
         private readonly AppDbContext dbContext;
-        private readonly AttendanceDbContext attendanceDbContext;
+        //private readonly AttendanceDbContext attendanceDbContext;
 
         private readonly DbSet<CheckInModel> dbSetCheckIn;
         private readonly DbSet<CheckOutModel> dbSetCheckOut;
@@ -40,10 +39,10 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Facades
 
         private string USER_AGENT = "Facade";
 
-        public AttendanceFacade(AppDbContext dbContext, AttendanceDbContext attendanceDbContext, IServiceProvider serviceProvider)
+        public AttendanceFacade(AppDbContext dbContext, /*AttendanceDbContext attendanceDbContext,*/ IServiceProvider serviceProvider)
         {
             this.dbContext = dbContext;
-            this.attendanceDbContext = attendanceDbContext;
+            //this.attendanceDbContext = attendanceDbContext;
 
             dbSetCheckIn = dbContext.Set<CheckInModel>();
             dbSetCheckOut = dbContext.Set<CheckOutModel>();
@@ -52,236 +51,236 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Facades
             identityService = (IdentityService)serviceProvider.GetService(typeof(IdentityService));
         }
 
-        public async Task<CheckTimeIndex> Read(string type, int page = 1, int size = 25, string order = "{}", string keyword = null, string filter = "{}")
-        {
-            var adminEmployeeId = 0;
-            var accessRole = "User Biasa";
-            var startDate = DateTimeOffset.Now.AddDays(-7);
-            var endDate = DateTimeOffset.Now;
-            var result = new List<CheckTimeDto>();
-            var totalData = 0;
+        //public async Task<CheckTimeIndex> Read(string type, int page = 1, int size = 25, string order = "{}", string keyword = null, string filter = "{}")
+        //{
+        //    var adminEmployeeId = 0;
+        //    var accessRole = "User Biasa";
+        //    var startDate = DateTimeOffset.Now.AddDays(-7);
+        //    var endDate = DateTimeOffset.Now;
+        //    var result = new List<CheckTimeDto>();
+        //    var totalData = 0;
 
-            var employeeQuery = 
-                this.attendanceDbContext.Employees.AsNoTracking()
-                    .Select(x => 
-                        new EmployeeModel 
-                        { 
-                            Id = x.Id, 
-                            EmployeeIdentity = x.EmployeeIdentity,
-                            Firstname = x.Firstname,
-                            Lastname = x.Lastname,
-                            UnitId = x.UnitId,
-                            SectionId = x.SectionId,
-                            GroupId = x.GroupId
-                        }).AsQueryable();
+        //    var employeeQuery = 
+        //        this.attendanceDbContext.Employees.AsNoTracking()
+        //            .Select(x => 
+        //                new EmployeeModel 
+        //                { 
+        //                    Id = x.Id, 
+        //                    EmployeeIdentity = x.EmployeeIdentity,
+        //                    Firstname = x.Firstname,
+        //                    Lastname = x.Lastname,
+        //                    UnitId = x.UnitId,
+        //                    SectionId = x.SectionId,
+        //                    GroupId = x.GroupId
+        //                }).AsQueryable();
 
-            Dictionary<string, string> FilterDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(filter);
-            Dictionary<string, string> OrderDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(order);
-            List<string> searchAttributes = new List<string>()
-            {
-                "CheckTime", "EmployeeId", "UnitName", "SectionName", "GroupName", "EmployeeName", "EmployeeIdentity"
-            };
+        //    Dictionary<string, string> FilterDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(filter);
+        //    Dictionary<string, string> OrderDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(order);
+        //    List<string> searchAttributes = new List<string>()
+        //    {
+        //        "CheckTime", "EmployeeId", "UnitName", "SectionName", "GroupName", "EmployeeName", "EmployeeIdentity"
+        //    };
 
-            if (FilterDictionary.ContainsKey("adminEmployeeId"))
-            {
-                adminEmployeeId = Convert.ToInt16(FilterDictionary["adminEmployeeId"]);
-                FilterDictionary.Remove("adminEmployeeId");
-            }
+        //    if (FilterDictionary.ContainsKey("adminEmployeeId"))
+        //    {
+        //        adminEmployeeId = Convert.ToInt16(FilterDictionary["adminEmployeeId"]);
+        //        FilterDictionary.Remove("adminEmployeeId");
+        //    }
 
-            if (FilterDictionary.ContainsKey("accessRole"))
-            {
-                accessRole = FilterDictionary["accessRole"];
-                FilterDictionary.Remove("accessRole");
-            }
+        //    if (FilterDictionary.ContainsKey("accessRole"))
+        //    {
+        //        accessRole = FilterDictionary["accessRole"];
+        //        FilterDictionary.Remove("accessRole");
+        //    }
 
-            if (FilterDictionary.ContainsKey("startDate"))
-            {
-                if (DateTime.TryParse(FilterDictionary["startDate"], out DateTime resultStartDate))
-                {
-                    startDate = resultStartDate;
-                }
+        //    if (FilterDictionary.ContainsKey("startDate"))
+        //    {
+        //        if (DateTime.TryParse(FilterDictionary["startDate"], out DateTime resultStartDate))
+        //        {
+        //            startDate = resultStartDate;
+        //        }
 
-                FilterDictionary.Remove("startDate");
-            }
+        //        FilterDictionary.Remove("startDate");
+        //    }
 
-            if (FilterDictionary.ContainsKey("endDate"))
-            {
-                if (DateTime.TryParse(FilterDictionary["endDate"], out DateTime resultEndDate))
-                {
-                    endDate = resultEndDate;
-                }
+        //    if (FilterDictionary.ContainsKey("endDate"))
+        //    {
+        //        if (DateTime.TryParse(FilterDictionary["endDate"], out DateTime resultEndDate))
+        //        {
+        //            endDate = resultEndDate;
+        //        }
 
-                FilterDictionary.Remove("endDate");
-            }
+        //        FilterDictionary.Remove("endDate");
+        //    }
 
-            if (OrderDictionary.Count <= 0)
-            {
-                OrderDictionary.Add("CheckTime", "desc");
-            }
+        //    if (OrderDictionary.Count <= 0)
+        //    {
+        //        OrderDictionary.Add("CheckTime", "desc");
+        //    }
 
-            if (accessRole != "Personalia Pusat" && accessRole != "HRD")
-            {
-                var unitIds = attendanceDbContext.EmployeeUnitAccessItems.AsNoTracking().Where(entity => entity.EmployeeId == adminEmployeeId).Select(entity => entity.UnitId).ToList();
+        //    if (accessRole != "Personalia Pusat" && accessRole != "HRD")
+        //    {
+        //        var unitIds = attendanceDbContext.EmployeeUnitAccessItems.AsNoTracking().Where(entity => entity.EmployeeId == adminEmployeeId).Select(entity => entity.UnitId).ToList();
 
-                if (unitIds.Count > 0)
-                {
-                    employeeQuery = employeeQuery.Where(s => unitIds.Contains(s.UnitId));
-                }
-                else
-                {
-                    return new CheckTimeIndex(result, totalData, page, size);
-                }
-            }
+        //        if (unitIds.Count > 0)
+        //        {
+        //            employeeQuery = employeeQuery.Where(s => unitIds.Contains(s.UnitId));
+        //        }
+        //        else
+        //        {
+        //            return new CheckTimeIndex(result, totalData, page, size);
+        //        }
+        //    }
 
-            employeeQuery = QueryHelper<EmployeeModel>.ConfigureFilter(employeeQuery, FilterDictionary);
+        //    employeeQuery = QueryHelper<EmployeeModel>.ConfigureFilter(employeeQuery, FilterDictionary);
 
-            var employees = from a in employeeQuery
-                            join b in attendanceDbContext.Units on a.UnitId equals b.Id
-                            join c in attendanceDbContext.Sections on a.SectionId equals c.Id
-                            join d in attendanceDbContext.Groups on a.GroupId equals d.Id
-                            select new
-                            {
-                                EmployeeId = a.Id,
-                                EmployeeName = a.Firstname + " " + a.Lastname,
-                                EmployeeIdentity = a.EmployeeIdentity,
-                                UnitId = b.Id,
-                                UnitName = b.Name,
-                                SectionId = c.Id,
-                                SectionName = c.Name,
-                                GroupId = d.Id,
-                                GroupName = d.Name,
-                            }; 
+        //    var employees = from a in employeeQuery
+        //                    join b in attendanceDbContext.Units on a.UnitId equals b.Id
+        //                    join c in attendanceDbContext.Sections on a.SectionId equals c.Id
+        //                    join d in attendanceDbContext.Groups on a.GroupId equals d.Id
+        //                    select new
+        //                    {
+        //                        EmployeeId = a.Id,
+        //                        EmployeeName = a.Firstname + " " + a.Lastname,
+        //                        EmployeeIdentity = a.EmployeeIdentity,
+        //                        UnitId = b.Id,
+        //                        UnitName = b.Name,
+        //                        SectionId = c.Id,
+        //                        SectionName = c.Name,
+        //                        GroupId = d.Id,
+        //                        GroupName = d.Name,
+        //                    }; 
 
-            if (type == "check-in")
-            {
-                var queryIn = this.dbSetCheckIn.AsNoTracking().Where(x => x.CheckTime.Date >= startDate.Date && x.CheckTime.Date <= endDate.Date).AsEnumerable();
+        //    if (type == "check-in")
+        //    {
+        //        var queryIn = this.dbSetCheckIn.AsNoTracking().Where(x => x.CheckTime.Date >= startDate.Date && x.CheckTime.Date <= endDate.Date).AsEnumerable();
 
-                var query = from a in employees
-                            join b in queryIn
-                            on a.EmployeeId equals b.Id
-                            select new CheckTimeDto
-                            {
-                                Id = b.Id,
-                                EmployeeId = b.EmployeeId,
-                                EmployeeIdentity = a.EmployeeIdentity,
-                                EmployeeName = a.EmployeeName,
-                                UnitName = a.UnitName,
-                                SectionName = a.UnitName,
-                                GroupName = a.UnitName,
-                                CheckTime = b.CheckTime,
-                                AttendanceId = b.AttendanceId,
-                                Username = b.CreatedBy,
-                                Type = AttendanceType.CHECKIN,
-                                IsPosted = b.IsPosted,
-                            };
+        //        var query = from a in employees
+        //                    join b in queryIn
+        //                    on a.EmployeeId equals b.Id
+        //                    select new CheckTimeDto
+        //                    {
+        //                        Id = b.Id,
+        //                        EmployeeId = b.EmployeeId,
+        //                        EmployeeIdentity = a.EmployeeIdentity,
+        //                        EmployeeName = a.EmployeeName,
+        //                        UnitName = a.UnitName,
+        //                        SectionName = a.UnitName,
+        //                        GroupName = a.UnitName,
+        //                        CheckTime = b.CheckTime,
+        //                        AttendanceId = b.AttendanceId,
+        //                        Username = b.CreatedBy,
+        //                        Type = AttendanceType.CHECKIN,
+        //                        IsPosted = b.IsPosted,
+        //                    };
 
-                query = QueryHelper<CheckTimeDto>.ConfigureSearch(query, searchAttributes, keyword);
-                query = QueryHelper<CheckTimeDto>.ConfigureOrder(query, OrderDictionary);
+        //        query = QueryHelper<CheckTimeDto>.ConfigureSearch(query, searchAttributes, keyword);
+        //        query = QueryHelper<CheckTimeDto>.ConfigureOrder(query, OrderDictionary);
 
-                Pageable<CheckTimeDto> pageable = new Pageable<CheckTimeDto>(query, page - 1, size);
-                result = pageable.Data.ToList<CheckTimeDto>();
-                totalData = pageable.TotalCount;
-            }
-            else
-            {
-                var queryOut = this.dbSetCheckOut.AsNoTracking().Where(x => x.CheckTime.Date >= startDate.Date && x.CheckTime.Date <= endDate.Date).AsEnumerable();
+        //        Pageable<CheckTimeDto> pageable = new Pageable<CheckTimeDto>(query, page - 1, size);
+        //        result = pageable.Data.ToList<CheckTimeDto>();
+        //        totalData = pageable.TotalCount;
+        //    }
+        //    else
+        //    {
+        //        var queryOut = this.dbSetCheckOut.AsNoTracking().Where(x => x.CheckTime.Date >= startDate.Date && x.CheckTime.Date <= endDate.Date).AsEnumerable();
 
-                var query = from a in employees
-                            join b in queryOut
-                            on a.EmployeeId equals b.Id
-                            select new CheckTimeDto
-                            {
-                                Id = b.Id,
-                                EmployeeId = b.EmployeeId,
-                                EmployeeIdentity = a.EmployeeIdentity,
-                                EmployeeName = a.EmployeeName,
-                                UnitName = a.UnitName,
-                                SectionName = a.UnitName,
-                                GroupName = a.UnitName,
-                                CheckTime = b.CheckTime,
-                                AttendanceId = b.AttendanceId,
-                                Username = b.CreatedBy,
-                                Type = AttendanceType.CHECKOUT,
-                                IsPosted = b.IsPosted,
-                            };
+        //        var query = from a in employees
+        //                    join b in queryOut
+        //                    on a.EmployeeId equals b.Id
+        //                    select new CheckTimeDto
+        //                    {
+        //                        Id = b.Id,
+        //                        EmployeeId = b.EmployeeId,
+        //                        EmployeeIdentity = a.EmployeeIdentity,
+        //                        EmployeeName = a.EmployeeName,
+        //                        UnitName = a.UnitName,
+        //                        SectionName = a.UnitName,
+        //                        GroupName = a.UnitName,
+        //                        CheckTime = b.CheckTime,
+        //                        AttendanceId = b.AttendanceId,
+        //                        Username = b.CreatedBy,
+        //                        Type = AttendanceType.CHECKOUT,
+        //                        IsPosted = b.IsPosted,
+        //                    };
 
-                query = QueryHelper<CheckTimeDto>.ConfigureSearch(query, searchAttributes, keyword);
-                query = QueryHelper<CheckTimeDto>.ConfigureOrder(query, OrderDictionary);
+        //        query = QueryHelper<CheckTimeDto>.ConfigureSearch(query, searchAttributes, keyword);
+        //        query = QueryHelper<CheckTimeDto>.ConfigureOrder(query, OrderDictionary);
 
-                Pageable<CheckTimeDto> pageable = new Pageable<CheckTimeDto>(query, page - 1, size);
-                result = pageable.Data.ToList<CheckTimeDto>();
-                totalData = pageable.TotalCount;
-            }
+        //        Pageable<CheckTimeDto> pageable = new Pageable<CheckTimeDto>(query, page - 1, size);
+        //        result = pageable.Data.ToList<CheckTimeDto>();
+        //        totalData = pageable.TotalCount;
+        //    }
 
-            return new CheckTimeIndex(result, totalData, page, size);
-        }
+        //    return new CheckTimeIndex(result, totalData, page, size);
+        //}
 
-        public async Task<CheckTimeIndex> Read(string type, int page = 1, int size = 25)
-        {
-            var result = new List<CheckTimeDto>();
-            var totalData = 0;
+        //public async Task<CheckTimeIndex> Read(string type, int page = 1, int size = 25)
+        //{
+        //    var result = new List<CheckTimeDto>();
+        //    var totalData = 0;
 
-            if (type == "check-in")
-            { 
-                totalData = await this.dbSetCheckIn.CountAsync();
+        //    if (type == "check-in")
+        //    { 
+        //        totalData = await this.dbSetCheckIn.CountAsync();
 
-                var queryInList = this.dbSetCheckIn.AsNoTracking().OrderByDescending(entity => entity.CheckTime).Skip((page - 1) * size).Take(size).ToList();
+        //        var queryInList = this.dbSetCheckIn.AsNoTracking().OrderByDescending(entity => entity.CheckTime).Skip((page - 1) * size).Take(size).ToList();
 
-                var query = from a in queryInList
-                            join b in attendanceDbContext.Employees on a.EmployeeId equals b.Id
-                            join c in attendanceDbContext.Units on b.UnitId equals c.Id
-                            join d in attendanceDbContext.Sections on b.SectionId equals d.Id
-                            join e in attendanceDbContext.Groups on b.GroupId equals e.Id
-                            select new CheckTimeDto
-                            {
-                                Id = a.Id,
-                                EmployeeId = a.EmployeeId,
-                                EmployeeIdentity = b.EmployeeIdentity,
-                                EmployeeName = b.Firstname + " " + b.Lastname,
-                                UnitName = c.Name,
-                                SectionName = d.Name,
-                                GroupName = d.Name,
-                                CheckTime = a.CheckTime,
-                                AttendanceId = a.AttendanceId,
-                                Username = a.CreatedBy,
-                                Type = AttendanceType.CHECKIN,
-                                IsPosted = a.IsPosted,
-                            };
+        //        var query = from a in queryInList
+        //                    join b in attendanceDbContext.Employees on a.EmployeeId equals b.Id
+        //                    join c in attendanceDbContext.Units on b.UnitId equals c.Id
+        //                    join d in attendanceDbContext.Sections on b.SectionId equals d.Id
+        //                    join e in attendanceDbContext.Groups on b.GroupId equals e.Id
+        //                    select new CheckTimeDto
+        //                    {
+        //                        Id = a.Id,
+        //                        EmployeeId = a.EmployeeId,
+        //                        EmployeeIdentity = b.EmployeeIdentity,
+        //                        EmployeeName = b.Firstname + " " + b.Lastname,
+        //                        UnitName = c.Name,
+        //                        SectionName = d.Name,
+        //                        GroupName = d.Name,
+        //                        CheckTime = a.CheckTime,
+        //                        AttendanceId = a.AttendanceId,
+        //                        Username = a.CreatedBy,
+        //                        Type = AttendanceType.CHECKIN,
+        //                        IsPosted = a.IsPosted,
+        //                    };
 
-                result = query.ToList();
-            }
-            else
-            {
-                var queryOut = this.dbSetCheckOut.AsEnumerable();
+        //        result = query.ToList();
+        //    }
+        //    else
+        //    {
+        //        var queryOut = this.dbSetCheckOut.AsEnumerable();
 
-                totalData = queryOut.Count();
+        //        totalData = queryOut.Count();
 
-                var queryOutList = queryOut.OrderByDescending(entity => entity.CheckTime).Skip((page - 1) * size).Take(size).ToList();
+        //        var queryOutList = queryOut.OrderByDescending(entity => entity.CheckTime).Skip((page - 1) * size).Take(size).ToList();
 
-                var query = from a in queryOutList
-                            join b in attendanceDbContext.Employees on a.EmployeeId equals b.Id
-                            join c in attendanceDbContext.Units on b.UnitId equals c.Id
-                            join d in attendanceDbContext.Sections on b.SectionId equals d.Id
-                            join e in attendanceDbContext.Groups on b.GroupId equals e.Id
-                            select new CheckTimeDto
-                            {
-                                Id = a.Id,
-                                EmployeeId = a.EmployeeId,
-                                EmployeeIdentity = b.EmployeeIdentity,
-                                EmployeeName = b.Firstname + " " + b.Lastname,
-                                UnitName = c.Name,
-                                SectionName = d.Name,
-                                GroupName = d.Name,
-                                CheckTime = a.CheckTime,
-                                AttendanceId = a.AttendanceId,
-                                Username = a.CreatedBy,
-                                Type = AttendanceType.CHECKIN,
-                                IsPosted = a.IsPosted,
-                            };
-            }
+        //        var query = from a in queryOutList
+        //                    join b in attendanceDbContext.Employees on a.EmployeeId equals b.Id
+        //                    join c in attendanceDbContext.Units on b.UnitId equals c.Id
+        //                    join d in attendanceDbContext.Sections on b.SectionId equals d.Id
+        //                    join e in attendanceDbContext.Groups on b.GroupId equals e.Id
+        //                    select new CheckTimeDto
+        //                    {
+        //                        Id = a.Id,
+        //                        EmployeeId = a.EmployeeId,
+        //                        EmployeeIdentity = b.EmployeeIdentity,
+        //                        EmployeeName = b.Firstname + " " + b.Lastname,
+        //                        UnitName = c.Name,
+        //                        SectionName = d.Name,
+        //                        GroupName = d.Name,
+        //                        CheckTime = a.CheckTime,
+        //                        AttendanceId = a.AttendanceId,
+        //                        Username = a.CreatedBy,
+        //                        Type = AttendanceType.CHECKIN,
+        //                        IsPosted = a.IsPosted,
+        //                    };
+        //    }
 
-            return new CheckTimeIndex(result, totalData, page, size);
-        }
+        //    return new CheckTimeIndex(result, totalData, page, size);
+        //}
 
         public async Task<int> CheckIn(CheckInViewModel viewModel)
         {
@@ -391,9 +390,30 @@ namespace Com.DanLiris.Service.EmergencyAttendance.Lib.Facades
             return Created;
         }
 
-        public async Task<CheckTimeDto> GetLatestAttend(int employeeId)
+        public async Task<bool> GetLatestAttend(int employeeId, string type, DateTimeOffset date)
         {
-            throw new NotImplementedException();
+            var result = false;
+
+            if (type == AttendanceType.CHECKIN)
+            {
+                result = 
+                    await dbContext.CheckIns
+                    .AnyAsync(entity =>
+                        entity.EmployeeId == employeeId &&
+                        entity.CheckTime.AddHours(identityService.TimezoneOffset).Date == date.AddHours(identityService.TimezoneOffset).Date
+                    );
+            }
+            else
+            {
+                result =
+                   await dbContext.CheckOuts
+                   .AnyAsync(entity =>
+                       entity.EmployeeId == employeeId &&
+                       entity.CheckTime.AddHours(identityService.TimezoneOffset).Date == date.AddHours(identityService.TimezoneOffset).Date
+                   );
+            }
+
+            return result;
         }
     }
 }

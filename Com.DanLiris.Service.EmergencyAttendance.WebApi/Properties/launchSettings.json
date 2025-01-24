@@ -1,11 +1,26 @@
 {
   "profiles": {
-    "Com.DanLiris.Service.Purchasing.WebApi": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Com.Danliris.Service.EmergencyAttendance.WebApi": {
       "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "https://localhost:60462;http://localhost:60463"
+    }
+  },
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:59020/",
+      "sslPort": 44364
     }
   }
 }
